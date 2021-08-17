@@ -13,10 +13,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FDate = void 0;
-var FDate = /** @class */ (function (_super) {
-    __extends(FDate, _super);
-    function FDate() {
+var DatePlus = /** @class */ (function (_super) {
+    __extends(DatePlus, _super);
+    function DatePlus() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
@@ -59,8 +58,8 @@ var FDate = /** @class */ (function (_super) {
      * `YYYY` - full year (e.g. 1998)
      * @param formatStr Format string
      */
-    FDate.prototype.format = function (formatStr) {
-        var day = this.getDate(), month = this.getMonth(), year = this.getFullYear(), hour = this.getHours(), minute = this.getMinutes(), second = this.getSeconds(), milliseconds = this.getMilliseconds(), hh = this._twoDigitPad(hour), mm = this._twoDigitPad(minute), ss = this._twoDigitPad(second), EEEE = FDate.DAYS[this.getDay()], EEE = EEEE.substr(0, 3), DD = this._twoDigitPad(day), M = month + 1, MM = this._twoDigitPad(M), MMMM = FDate.MONTHS[month], MMM = MMMM.substr(0, 3), YYYY = year + "", YY = YYYY.substr(-2);
+    DatePlus.prototype.format = function (formatStr) {
+        var day = this.getDate(), month = this.getMonth(), year = this.getFullYear(), hour = this.getHours(), minute = this.getMinutes(), second = this.getSeconds(), milliseconds = this.getMilliseconds(), hh = this._twoDigitPad(hour), mm = this._twoDigitPad(minute), ss = this._twoDigitPad(second), EEEE = DatePlus.DAYS[this.getDay()], EEE = EEEE.substr(0, 3), DD = this._twoDigitPad(day), M = month + 1, MM = this._twoDigitPad(M), MMMM = DatePlus.MONTHS[month], MMM = MMMM.substr(0, 3), YYYY = year + "", YY = YYYY.substr(-2);
         return formatStr
             .replace('hh', hh.toString()).replace('h', hour.toString())
             .replace('mm', mm.toString()).replace('m', minute.toString())
@@ -79,18 +78,18 @@ var FDate = /** @class */ (function (_super) {
      * If the time passed is lower than the milliseconds value of the first time step that was not skipped,
      * the function will return the string `'Now'`
      */
-    FDate.prototype.represent = function (skip) {
+    DatePlus.prototype.represent = function (skip) {
         if (skip === void 0) { skip = ['MILLISECOND']; }
         var timeDiff = Date.now() - +this;
         var timeAgo = 0;
         var timeStr = "Now";
-        for (var step in FDate.TIME) {
+        for (var step in DatePlus.TIME) {
             if (skip.includes(step)) {
                 continue;
             }
             if (timeDiff > 0) {
-                if (timeDiff >= FDate.TIME[step]) {
-                    timeAgo = Math.floor(timeDiff / FDate.TIME[step]);
+                if (timeDiff >= DatePlus.TIME[step]) {
+                    timeAgo = Math.floor(timeDiff / DatePlus.TIME[step]);
                     timeStr = timeAgo + " " + step.toLowerCase() + (timeAgo > 1 ? 's' : '') + " ago";
                 }
                 else {
@@ -98,8 +97,8 @@ var FDate = /** @class */ (function (_super) {
                 }
             }
             else if (timeDiff < 0) {
-                if (-timeDiff >= FDate.TIME[step]) {
-                    timeAgo = Math.floor(-timeDiff / FDate.TIME[step]);
+                if (-timeDiff >= DatePlus.TIME[step]) {
+                    timeAgo = Math.floor(-timeDiff / DatePlus.TIME[step]);
                     timeStr = "in " + timeAgo + " " + step.toLowerCase() + (timeAgo > 1 ? 's' : '');
                 }
                 else {
@@ -109,13 +108,69 @@ var FDate = /** @class */ (function (_super) {
         }
         return timeStr;
     };
-    FDate.prototype._twoDigitPad = function (num) {
+    /**
+     * Adds milliseconds to the date
+     * @param ms the number of milliseconds to add
+     */
+    DatePlus.prototype.addMilliseconds = function (ms) {
+        this.setMilliseconds(+this + ms);
+        return new Date(this);
+    };
+    /**
+     * Adds seconds to the date
+     * @param seconds the number of seconds to add
+     */
+    DatePlus.prototype.addSeconds = function (seconds) {
+        this.setMilliseconds(+this + seconds * DatePlus.TIME.SECOND);
+        return new Date(this);
+    };
+    /**
+     * Adds minutes to the date
+     * @param minutes the number of minutes to add
+     */
+    DatePlus.prototype.addMinutes = function (minutes) {
+        this.setMilliseconds(+this + minutes * DatePlus.TIME.MINUTE);
+        return new Date(this);
+    };
+    /**
+     * Adds hours to the date
+     * @param hours the number of hours to add
+     */
+    DatePlus.prototype.addHours = function (hours) {
+        this.setMilliseconds(+this + hours * DatePlus.TIME.HOUR);
+        return new Date(this);
+    };
+    /**
+     * Adds days to the date
+     * @param days the days of milliseconds to add
+     */
+    DatePlus.prototype.addDays = function (days) {
+        this.setMilliseconds(+this + days * DatePlus.TIME.DAY);
+        return new Date(this);
+    };
+    /**
+     * Adds months to the date
+     * @param months the months of milliseconds to add
+     */
+    DatePlus.prototype.addMonths = function (months) {
+        this.setMilliseconds(+this + months * DatePlus.TIME.MONTH);
+        return new Date(this);
+    };
+    /**
+     * Adds years to the date
+     * @param years the years of milliseconds to add
+     */
+    DatePlus.prototype.addYears = function (years) {
+        this.setMilliseconds(+this + years * DatePlus.TIME.YEAR);
+        return new Date(this);
+    };
+    DatePlus.prototype._twoDigitPad = function (num) {
         return num < 10 ? "0" + num : num;
     };
     /**
      * Time steps from milliseconds to year, the value is in milliseconds
      */
-    FDate.TIME = {
+    DatePlus.TIME = {
         MILLISECOND: 1,
         SECOND: 1e3,
         MINUTE: 6e4,
@@ -128,17 +183,17 @@ var FDate = /** @class */ (function (_super) {
     /**
      * Days of the week names
      */
-    FDate.DAYS = [
+    DatePlus.DAYS = [
         "Sunday", "Monday", "Tuesday",
         "Wednesday", "Thursday", "Friday", "Saturday"
     ];
     /**
      * Months names
      */
-    FDate.MONTHS = [
+    DatePlus.MONTHS = [
         "January", "February", "March", "April", "May", "June", "July",
         "August", "September", "October", "November", "December"
     ];
-    return FDate;
+    return DatePlus;
 }(Date));
-exports.FDate = FDate;
+exports.default = DatePlus;
