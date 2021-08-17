@@ -8,8 +8,23 @@
   },
   "types": "index.d.ts",
   "repository": {
-    "url": "https://github.com/xpodev/date-xx"
+    "type": "git",
+    "url": "https://github.com/xpodev/date-xx.git"
   },
+  "keywords": [
+    "date",
+    "format",
+    "utilities"
+  ],
+  "bugs": {
+    "url": "https://github.com/xpodev/date-xx/issues"
+  },
+  "homepage": "https://github.com/xpodev/date-xx",
   "author": "Xpo Development",
+  "contributors": [
+    {
+      "name": "Neriya Cohen"
+    }
+  ],
   "license": "MIT"
 }
