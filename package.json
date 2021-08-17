@@ -1,0 +1,15 @@
+{
+  "name": "date-xx",
+  "version": "1.0.0",
+  "description": "Date library with formatting and representation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "types": "index.d.ts",
+  "repository": {
+    "url": "https://github.com/xpodev/date-xx"
+  },
+  "author": "Xpo Development",
+  "license": "MIT"
+}
