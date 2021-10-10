@@ -4,15 +4,15 @@ Date library with formatting and representation.
 
 ## Installing
 ```
-npm i date-xx
+npm i better-date
 ```
 
 ## Formatting
 Format example:
 ```js
-var DatePlus = require("date-xx");
+var { DatePlus } = require("better-date");
 var date = new DatePlus();
-console.log(date.format("DD/MM/YY HH:mm:ss")); // Will pint something like 17/08/21 15:40
+console.log(date.format("DD/MM/YY HH:mm:ss")); // Will pint something like 17/08/21 15:40:05
 ```
 ### Format letters table
 | Letters | Meaning                                                     |
@@ -49,7 +49,7 @@ DatePlus comes with some useful objects.
 Using the `represent` function will return a string that represents when the date object time is compared to now.
 Usage example:
 ```js
-var DatePlus = require("date-xx");
+var { DatePlus } = require("better-date");
 var fiveHoursFromNow = new DatePlus(Date.now() + DatePlus.TIME.HOUR * 5);
 var fiveHoursAgo = new DatePlus(Date.now() - DatePlus.TIME.HOUR * 5);
 
@@ -60,7 +60,7 @@ console.log(fiveHoursAgo.represent()); // "in 5 hours"
 ## More functions
 You can add specific amount of time to the date object using the functions `addSeconds`, `addMinutes` etc.
 ```js
-var DatePlus = require("date-xx");
+var { DatePlus } = require("better-date");
 var date = new DatePlus().addMinutes(5);
 console.log(date.represent()); // "in 5 minutes"
 ```
