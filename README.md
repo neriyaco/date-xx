@@ -1,4 +1,4 @@
-# date-xx
+# better-date
 
 Date library with formatting and representation.
 
